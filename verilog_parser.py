@@ -6,6 +6,8 @@ src = """module pipe_pal
 comment */ 444;
 333; //expression
 assign a_wire = (3+4)*2 + 4 - 1;
+assign b_wire = a_wire << 2;
+assign c_wire = -a**2;
 endmodule"""
 
 with open('verilog.lark') as f:

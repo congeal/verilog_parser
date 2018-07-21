@@ -21,21 +21,23 @@ net_assignment: net_lvalue "=" expression
 net_lvalue: identifier
 
 //expression
-expression: arith_expr
+?expression: shift_expr
 
+?shift_expr: arith_expr (_shift_op arith_expr)*
 ?arith_expr: term (_add_op term)*
-?term: factor (_mul_op factor)*
-?factor: _factor_op factor | power
-?power: atom_expr ["**" factor]
+?term: power (_mul_op power)*
+?power: factor ["**" factor]
+?factor: _factor_op atom_expr | atom_expr
 
+!_shift_op: "<<"|"<<<"|">>"|">>>"
 !_add_op: "+"|"-"
-!_mul_op: "*"|"/"
-!_factor_op: "+"|"-"|"~"
+!_mul_op: "*"|"/"|"%"
+!_factor_op: "+"|"-"|"~"|"!"
 
 ?atom_expr: atom
 
-?atom: NUMBER
-    | identifier
+?atom: identifier
+    | NUMBER
     | "(" expression ")"
 
 // Terminals
