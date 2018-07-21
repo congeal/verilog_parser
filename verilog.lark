@@ -48,7 +48,7 @@ ANY_CHAR: /[^ \t\r\n\f]/
 COMMENT: "//" /[^\n]*/
 %ignore COMMENT
 
-BLOCK_COMMENT: "/*" /(.|\n)+/ "*/"
+BLOCK_COMMENT: "/*" /(.|\n)*?/ "*/"
 %ignore BLOCK_COMMENT
 
 %import common.WS_INLINE
