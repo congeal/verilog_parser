@@ -12,18 +12,25 @@ ports: identifier ("," identifier)*
 //module item
 module_item: module_or_generate_item
 
-module_or_generate_item: continuous_assign
-    | (expression ";")*
+?module_or_generate_item: continuous_assign
+    | always_construct
 
-//statement
+//continuous assignment
 continuous_assign: "assign" net_assignment ("," net_assignment)* ";"
 net_assignment: net_lvalue "=" expression
 net_lvalue: identifier
 
-//expression
-?expression: cond_expr
+//always construct
+always_construct: "always" statement
+//statement
+?statement: blocking_assignment ";"
+    | nonblocking_assignment ";"
+blocking_assignment: variable_lvalue "=" expression
+nonblocking_assignment: variable_lvalue "<=" expression
+variable_lvalue: identifier
 
-?cond_expr: or_expr ["?" or_expr ":" or_expr]
+//expression
+?expression: or_expr ["?" or_expr ":" or_expr]
 ?or_expr: and_expr (_or_op and_expr)*
 ?and_expr: bitwise_or_expr (_and_op bitwise_or_expr)*
 ?bitwise_or_expr: bitwise_xor_expr (_bitwise_or_op bitwise_xor_expr)*
