@@ -5,6 +5,7 @@ src = """module pipe_pal
 (a, b, c); /* multi-line
 comment */ 444;
 333; //expression
+assign a_wire = (3+4)*2 + 4 - 1;
 endmodule"""
 
 with open('verilog.lark') as f:

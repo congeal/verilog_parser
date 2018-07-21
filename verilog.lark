@@ -10,9 +10,32 @@ port_list: empty_list
     | "(" identifier ("," identifier)* ")"
 empty_list: "(" ")"
 
-module_item: (expression ";")*
-expression: NUMBER -> number
+//module item
+module_item: module_or_generate_item
 
+module_or_generate_item: continuous_assign
+    | (expression ";")*
+
+//statement
+continuous_assign: "assign" net_assignment ("," net_assignment)* ";"
+net_assignment: net_lvalue "=" expression
+net_lvalue: identifier
+
+//expression
+expression: product
+    | expression add_op product
+
+product: atom
+    | product mul_op atom
+
+add_op: "+" | "-"
+mul_op: "*" | "/"
+
+atom: NUMBER
+    | identifier
+    | "(" expression ")" -> group_expr
+
+// Terminals
 identifier: CNAME
     | ESC_NAME
 ESC_NAME: "\\"(ANY_CHAR+)
@@ -21,6 +44,7 @@ NUMBER: ("0".."9")+
 ANY_CHAR: /[^ \t\r\n\f]/
 %import common.CNAME
 
+// Ignorable
 COMMENT: "//" /[^\n]*/
 %ignore COMMENT
 
