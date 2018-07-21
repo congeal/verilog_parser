@@ -21,17 +21,33 @@ net_assignment: net_lvalue "=" expression
 net_lvalue: identifier
 
 //expression
-?expression: shift_expr
+?expression: cond_expr
 
+?cond_expr: or_expr ["?" or_expr ":" or_expr]
+?or_expr: and_expr (_or_op and_expr)*
+?and_expr: bitwise_or_expr (_and_op bitwise_or_expr)*
+?bitwise_or_expr: bitwise_xor_expr (_bitwise_or_op bitwise_xor_expr)*
+?bitwise_xor_expr: bitwise_and_expr (_bitwise_xor_op bitwise_and_expr)*
+?bitwise_and_expr: eq_expr (_bitwise_and_op eq_expr)*
+?eq_expr: comp_expr (_eq_op comp_expr)*
+?comp_expr: shift_expr (_comp_op shift_expr)*
 ?shift_expr: arith_expr (_shift_op arith_expr)*
 ?arith_expr: term (_add_op term)*
 ?term: power (_mul_op power)*
-?power: factor ["**" factor]
-?factor: _factor_op atom_expr | atom_expr
+?power: factor [_power_op factor]
+?factor: [_factor_op] atom_expr
 
+!_or_op: "||"
+!_and_op: "&&"
+!_bitwise_or_op: "|"|"~|"
+!_bitwise_xor_op: "^"|"^~"|"~^"
+!_bitwise_and_op: "&"|"~&"
+!_eq_op: "=="|"!="|"==="|"!=="
+!_comp_op: "<"|">"|">="|"<="
 !_shift_op: "<<"|"<<<"|">>"|">>>"
 !_add_op: "+"|"-"
 !_mul_op: "*"|"/"|"%"
+!_power_op: "**"
 !_factor_op: "+"|"-"|"~"|"!"
 
 ?atom_expr: atom
