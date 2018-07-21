@@ -1,14 +1,13 @@
 start: description*
 
 description: module_declaration
-module_declaration: "module" module_identifier param_list? port_list? ";" module_item* "endmodule"
+module_declaration: ("module"|"macromodule") module_identifier param_list? port_list? ";" module_item* "endmodule"
 
 module_identifier: identifier
-param_list: "#" (empty_list
-        | "(" identifier ("," identifier)* ")")
-port_list: empty_list
-    | "(" identifier ("," identifier)* ")"
-empty_list: "(" ")"
+param_list: "#" "(" [ports] ")"
+
+port_list: "(" [ports] ")"
+ports: identifier ("," identifier)*
 
 //module item
 module_item: module_or_generate_item
