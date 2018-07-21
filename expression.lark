@@ -1,0 +1,24 @@
+start: expression+
+
+expression: product
+    | expression add_op product
+
+product: atom
+    | product mul_op atom
+
+add_op: "+" | "-"
+mul_op: "*" | "/"
+
+atom: number
+    | identifier
+    | "(" expression ")"
+
+number: SIGNED_NUMBER
+identifier: CNAME
+
+%import common.ESCAPED_STRING
+%import common.SIGNED_NUMBER
+%import common.CNAME
+%import common.WS
+
+%ignore WS

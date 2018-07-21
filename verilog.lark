@@ -1,0 +1,32 @@
+start: description*
+
+description: module_declaration
+module_declaration: "module" module_identifier param_list? port_list? ";" module_item* "endmodule"
+
+module_identifier: identifier
+param_list: "#" (empty_list
+        | "(" identifier ("," identifier)* ")")
+port_list: empty_list
+    | "(" identifier ("," identifier)* ")"
+empty_list: "(" ")"
+
+module_item: (expression ";")*
+expression: NUMBER -> number
+
+identifier: CNAME
+    | ESC_NAME
+ESC_NAME: "\\"(ANY_CHAR+)
+
+NUMBER: ("0".."9")+
+ANY_CHAR: /[^ \t\r\n\f]/
+%import common.CNAME
+
+COMMENT: "//" /[^\n]*/
+%ignore COMMENT
+//BLOCK_COMMENT: "/*" /[^\n]*/ "*/"
+//%ignore BLOCK_COMMENT
+
+%import common.WS
+%ignore WS
+%import common.NEWLINE
+%ignore NEWLINE
