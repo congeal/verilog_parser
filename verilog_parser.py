@@ -2,7 +2,8 @@ from lark import Lark, Transformer, v_args
 
 src = """module pipe_pal
 #(param, localparam)
-(a, b, c);
+(a, b, c); /* multi-line
+comment */ 444;
 333; //expression
 endmodule"""
 

@@ -23,10 +23,11 @@ ANY_CHAR: /[^ \t\r\n\f]/
 
 COMMENT: "//" /[^\n]*/
 %ignore COMMENT
-//BLOCK_COMMENT: "/*" /[^\n]*/ "*/"
-//%ignore BLOCK_COMMENT
 
-%import common.WS
-%ignore WS
+BLOCK_COMMENT: "/*" /(.|\n)+/ "*/"
+%ignore BLOCK_COMMENT
+
+%import common.WS_INLINE
+%ignore WS_INLINE
 %import common.NEWLINE
 %ignore NEWLINE
