@@ -22,18 +22,22 @@ net_assignment: net_lvalue "=" expression
 net_lvalue: identifier
 
 //expression
-expression: product
-    | expression add_op product
+expression: arith_expr
 
-product: atom
-    | product mul_op atom
+?arith_expr: term (_add_op term)*
+?term: factor (_mul_op factor)*
+?factor: _factor_op factor | power
+?power: atom_expr ["**" factor]
 
-add_op: "+" | "-"
-mul_op: "*" | "/"
+!_add_op: "+"|"-"
+!_mul_op: "*"|"/"
+!_factor_op: "+"|"-"|"~"
 
-atom: NUMBER
+?atom_expr: atom
+
+?atom: NUMBER
     | identifier
-    | "(" expression ")" -> group_expr
+    | "(" expression ")"
 
 // Terminals
 identifier: CNAME
