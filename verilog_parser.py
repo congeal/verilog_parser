@@ -10,7 +10,7 @@ assign d_wire = a_wire < b_wire;
 assign e_wire = a_wire !== b_wire;
 assign f_wire = a || b ? (b ? 1 : 0) : (c ? 0 : 1);
 
-always
+always @*
     c = a + b;
 
 always
