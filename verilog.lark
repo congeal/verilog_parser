@@ -76,7 +76,7 @@ variable_lvalue: identifier
 ?atom: identifier
     | number
     | "(" expression ")"
-number: DEC_NUMBER | HEX_NUMBER | OCT_NUMBER | BIN_NUMBER
+number: DEC_NUMBER | HEX_NUMBER | OCT_NUMBER | BIN_NUMBER | REAL_NUMBER
 
 // Terminals
 identifier: CNAME
@@ -89,6 +89,7 @@ DEC_NUMBER: [INT] ["'" /[sS]?[dD]/] /[0-9_xXzZ]+/
 HEX_NUMBER.2: [INT] "'" /[sS]?[hH][0-9a-fA-F_xXzZ]+/
 OCT_NUMBER.2: [INT] "'" /[sS]?[oO][0-7_xXzZ]+/
 BIN_NUMBER.2 : [INT] "'" /[sS]?[bB][0-1_xXzZ]+/
+REAL_NUMBER.2: /((\d+\.\d*|\.\d+)(e[-+]?\d+)?|\d+(e[-+]?\d+))/i
 ANY_CHAR: /[^ \t\r\n\f]/
 %import common.CNAME
 
