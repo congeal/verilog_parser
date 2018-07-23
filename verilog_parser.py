@@ -13,7 +13,7 @@ assign f_wire = a || b ? (b ? 1 : 0) : (c ? 0 : 1);
 always @*
     c = a + b;
 
-always
+always @(posedge i_clk, negedge resetn)
     q_c <= q_c + 1;
 endmodule"""
 

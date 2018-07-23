@@ -21,10 +21,11 @@ net_assignment: net_lvalue "=" expression
 net_lvalue: identifier
 
 //always construct
-always_construct: "always" [procedural_timing_control_statement] statement
+always_construct: "always" statement
 
 //statement
-?statement: blocking_assignment ";"
+?statement: [delay_or_event_control] statement_item
+?statement_item: blocking_assignment ";"
     | nonblocking_assignment ";"
 
 blocking_assignment: variable_lvalue "=" [delay_or_event_control] expression
@@ -32,12 +33,16 @@ nonblocking_assignment: variable_lvalue "<=" [delay_or_event_control] expression
 variable_lvalue: identifier
 
 //delay or event control
-?procedural_timing_control_statement: delay_or_event_control
 ?delay_or_event_control: delay_control
     | event_control
 
-delay_control: "#" NUMBER
-event_control: "@" (STAR | identifier)
+?delay_control: "#" NUMBER
+?event_control: "@" event_expression
+    | "@" "(" event_expression ")"
+?event_expression: event_primary (("or"|",") event_primary)*
+?event_primary: "*" -> star_event
+    | "posedge" expression -> posedge_event
+    | "negedge" expression -> negedge_event
 
 //expression
 ?expression: or_expr ["?" or_expr ":" or_expr]
@@ -81,8 +86,6 @@ ESC_NAME: "\\"(ANY_CHAR+)
 NUMBER: ("0".."9")+
 ANY_CHAR: /[^ \t\r\n\f]/
 %import common.CNAME
-
-STAR: "*"
 
 // Ignorable
 COMMENT: "//" /[^\n]*/
