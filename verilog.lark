@@ -36,7 +36,7 @@ variable_lvalue: identifier
 ?delay_or_event_control: delay_control
     | event_control
 
-?delay_control: "#" NUMBER
+?delay_control: "#" number
 ?event_control: "@" event_expression
     | "@" "(" event_expression ")"
 ?event_expression: event_primary (("or"|",") event_primary)*
@@ -73,17 +73,22 @@ variable_lvalue: identifier
 !_factor_op: "+"|"-"|"~"|"!"
 
 ?atom_expr: atom
-
 ?atom: identifier
-    | NUMBER
+    | number
     | "(" expression ")"
+number: DEC_NUMBER | HEX_NUMBER | OCT_NUMBER | BIN_NUMBER
 
 // Terminals
 identifier: CNAME
     | ESC_NAME
 ESC_NAME: "\\"(ANY_CHAR+)
 
-NUMBER: ("0".."9")+
+%import common.DIGIT
+INT: DIGIT+
+DEC_NUMBER: [INT] ["'" /[sS]?[dD]/] /[0-9_xXzZ]+/
+HEX_NUMBER.2: [INT] "'" /[sS]?[hH][0-9a-fA-F_xXzZ]+/
+OCT_NUMBER.2: [INT] "'" /[sS]?[oO][0-7_xXzZ]+/
+BIN_NUMBER.2 : [INT] "'" /[sS]?[bB][0-1_xXzZ]+/
 ANY_CHAR: /[^ \t\r\n\f]/
 %import common.CNAME
 

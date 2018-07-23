@@ -9,6 +9,8 @@ assign c_wire = -a**2;
 assign d_wire = a_wire < b_wire;
 assign e_wire = a_wire !== b_wire;
 assign f_wire = a || b ? (b ? 1 : 0) : (c ? 0 : 1);
+assign g_wire = 8'sb110Z_011x;
+assign h_wire = 'h1234_abcd_ef69;
 
 always @*
     c = a + b;
