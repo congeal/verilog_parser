@@ -75,6 +75,7 @@ variable_lvalue: identifier
 ?atom_expr: atom
 ?atom: identifier
     | number
+    | ESCAPED_STRING
     | "(" expression ")"
 number: DEC_NUMBER | HEX_NUMBER | OCT_NUMBER | BIN_NUMBER | REAL_NUMBER
 
@@ -82,6 +83,9 @@ number: DEC_NUMBER | HEX_NUMBER | OCT_NUMBER | BIN_NUMBER | REAL_NUMBER
 identifier: CNAME
     | ESC_NAME
 ESC_NAME: "\\"(ANY_CHAR+)
+ANY_CHAR: /[^ \t\r\n\f]/
+%import common.CNAME
+%import common.ESCAPED_STRING
 
 %import common.DIGIT
 INT: DIGIT+
@@ -90,8 +94,6 @@ HEX_NUMBER.2: [INT] "'" /[sS]?[hH][0-9a-fA-F_xXzZ]+/
 OCT_NUMBER.2: [INT] "'" /[sS]?[oO][0-7_xXzZ]+/
 BIN_NUMBER.2 : [INT] "'" /[sS]?[bB][0-1_xXzZ]+/
 REAL_NUMBER.2: /((\d+\.\d*|\.\d+)(e[-+]?\d+)?|\d+(e[-+]?\d+))/i
-ANY_CHAR: /[^ \t\r\n\f]/
-%import common.CNAME
 
 // Ignorable
 COMMENT: "//" /[^\n]*/
