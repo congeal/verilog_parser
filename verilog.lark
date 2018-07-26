@@ -33,6 +33,7 @@ always_construct: "always" statement
 ?statement: [delay_or_event_control] statement_item
 ?statement_item: blocking_assignment ";"
     | nonblocking_assignment ";"
+    | seq_block
 
 blocking_assignment: variable_lvalue "=" [delay_or_event_control] expression
 nonblocking_assignment: variable_lvalue "<=" [delay_or_event_control] expression
@@ -49,6 +50,8 @@ variable_lvalue: identifier
 ?event_primary: "*" -> star_event
     | "posedge" expression -> posedge_event
     | "negedge" expression -> negedge_event
+    
+seq_block: "begin" [":" identifier] statement* "end"
 
 //expression
 ?expression: or_expr ["?" or_expr ":" or_expr]

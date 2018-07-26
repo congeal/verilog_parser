@@ -15,8 +15,10 @@ assign j_wire = 3.14e10;
 assign k_wire = "hello, world!" + "" + "\"";
 
 always @*
+begin
     c = a + b;
-
+end
+  
 always @(posedge i_clk, negedge resetn)
     q_c <= q_c + 1;
 endmodule
