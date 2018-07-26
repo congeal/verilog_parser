@@ -1,13 +1,19 @@
 start: description*
 
 description: module_declaration
-module_declaration: ("module"|"macromodule") module_identifier param_list? port_list? ";" module_item* "endmodule"
+module_declaration: ("module"|"macromodule") identifier [param_list] [port_list] ";" module_item* "endmodule"
 
-module_identifier: identifier
-param_list: "#" "(" [ports] ")"
+param_list: "#" "(" [params] ")"
+?params: param_declaration ("," param_declaration)*
+?param_declaration: ("parameter"|"localparam") param_assignment
+param_assignment: identifier "=" expression
 
 port_list: "(" [ports] ")"
-ports: identifier ("," identifier)*
+?ports: port_declaration ("," port_declaration)*
+?port_declaration: ["input"|"output"|"inout"] ["signed"] [range] identifier
+?range: "[" left_range ":" right_range "]"
+left_range: expression
+right_range: expression
 
 //module item
 module_item: module_or_generate_item
@@ -80,7 +86,7 @@ variable_lvalue: identifier
 number: DEC_NUMBER | HEX_NUMBER | OCT_NUMBER | BIN_NUMBER | REAL_NUMBER
 
 // Terminals
-identifier: CNAME
+?identifier: CNAME
     | ESC_NAME
 ESC_NAME: "\\"(ANY_CHAR+)
 ANY_CHAR: /[^ \t\r\n\f]/
