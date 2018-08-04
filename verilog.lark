@@ -50,7 +50,7 @@ port_map: identifier
     | loop_statement
     | seq_block
     | par_block
-    | variable_lvalue ";" -> task_enable
+    | task_enable
 
 blocking_assignment: variable_lvalue "=" [delay_or_event_control] expression
 nonblocking_assignment: variable_lvalue "<=" [delay_or_event_control] expression
@@ -58,6 +58,7 @@ variable_lvalue: lvalue
 ?lvalue: identifier (range)*
     | concatenation
     | multiple_concatenation
+task_enable: variable_lvalue ["(" [expression ("," expression)*] ")"] ";"
 
 case_statement: ("case"|"casex"|"casex") "(" expression ")" case_item* "endcase"
 case_item: expression ("," expression)* ":" statement

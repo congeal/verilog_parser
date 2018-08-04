@@ -75,7 +75,7 @@ module pipe_pal
     initial
     begin
         repeat (a+1)
-            empty_task;
+            empty_task();
         while(i<3)
             i = i+1;
         for(i=0;i<3;i=i+1)
