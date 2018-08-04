@@ -109,7 +109,7 @@ module pipe_pal
         endcase
     end
 
-    some_submodule u_instance(a, .b(b), .c(c[3:0]));
+    some_submodule u_instance[1:0](a, .b(b), .c(c[3:0]));
 
     initial
         -> ev;

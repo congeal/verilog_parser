@@ -36,7 +36,7 @@ initial_construct: "initial" statement
 
 //instantiation
 module_instantiation: identifier [param_assignment] module_instance ("," module_instance)* ";"
-module_instance: identifier port_maps
+module_instance: identifier [range] port_maps
 port_maps: "(" port_map ("," port_map)* ")"
 port_map: identifier
     | "." identifier "(" expression ")"
