@@ -14,7 +14,7 @@ port_list: "(" [ports] ")"
 range: "[" expression [":" expression] "]"
 
 //module item
-module_item: module_or_generate_item
+?module_item: module_or_generate_item
     | params ";"
     | ports ";"
     | generated_instantiation
@@ -24,6 +24,7 @@ module_item: module_or_generate_item
     | module_instantiation
     | always_construct
     | initial_construct
+    | parameter_override ";"
 
 ?module_or_generate_item_declaration: var_declaration
     | function_declaration
@@ -101,6 +102,9 @@ seq_block: "begin" [":" block_name] var_declaration* statement* "end"
 par_block: "fork" [":" block_name] var_declaration* statement* "join"
 block_name: identifier
 
+parameter_override: "defparam" blocking_assignment
+
+//generate block
 generated_instantiation: "generate" generate_item* "endgenerate"
 ?generate_item: module_or_generate_item
     | generate_block

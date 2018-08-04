@@ -133,4 +133,6 @@ module pipe_pal
         some_submodule u_inst_gen(a, .b(b));
     end
     endgenerate
+
+    defparam W_DATA = 16;
 endmodule
