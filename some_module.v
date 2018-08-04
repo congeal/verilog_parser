@@ -58,4 +58,6 @@ module pipe_pal
 
     initial
         empty_task;
+
+    some_submodule u_instance(a, .b(b), .c(c[3:0]));
 endmodule
