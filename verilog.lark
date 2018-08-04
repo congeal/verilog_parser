@@ -50,6 +50,7 @@ port_map: identifier
     | loop_statement
     | event_trigger ";"
     | disable_statement ";"
+    | procedural_continuous_assignments ";"
     | seq_block
     | par_block
     | task_enable
@@ -63,6 +64,8 @@ variable_lvalue: lvalue
 task_enable: variable_lvalue ["(" [expression ("," expression)*] ")"] ";"
 event_trigger: "->" identifier
 disable_statement: "disable" identifier
+procedural_continuous_assignments: ("assign"|"force") blocking_assignment
+    | ("deassign"|"release") lvalue
 
 case_statement: ("case"|"casex"|"casex") "(" expression ")" case_item* "endcase"
 case_item: expression ("," expression)* ":" statement

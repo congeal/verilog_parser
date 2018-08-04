@@ -64,6 +64,8 @@ module pipe_pal
             empty_task;
         join
         disable name;
+        assign q = 1;
+        #4 deassign q;
     end
 
     initial
