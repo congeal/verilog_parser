@@ -47,6 +47,7 @@ port_map: identifier
     | nonblocking_assignment ";"
     | case_statement
     | conditional_statement
+    | loop_statement
     | seq_block
     | par_block
     | variable_lvalue ";" -> task_enable
@@ -63,6 +64,10 @@ case_item: expression ("," expression)* ":" statement
     | "default" ":" statement -> default_case_item
 
 conditional_statement: "if" "(" expression ")" statement ["else" statement]
+loop_statement: "forever" statement -> forever_loop
+    | "repeat" "(" expression ")" statement -> repeat_loop
+    | "while" "(" expression ")" statement -> while_loop
+    | "for" "(" blocking_assignment ";" expression ";" blocking_assignment ")" statement -> for_loop
 
 //delay or event control
 ?delay_or_event_control: delay_control

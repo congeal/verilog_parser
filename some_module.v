@@ -46,7 +46,10 @@ module pipe_pal
     function bfunc(input [W_DATA-1:0] a, b);
     begin
         bff = a * 3;
-        afunc = a+b;
+        if(c)
+            afunc = a+b;
+        else if(a)
+            afunc = 3;
     end
     endfunction
 
@@ -64,6 +67,20 @@ module pipe_pal
 
     initial
         empty_task;
+
+    initial
+        forever #1
+            clk = ~clk;
+
+    initial
+    begin
+        repeat (a+1)
+            empty_task;
+        while(i<3)
+            i = i+1;
+        for(i=0;i<3;i=i+1)
+            empty_task;
+    end
 
     always @(*)
     begin
