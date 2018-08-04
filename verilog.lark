@@ -53,7 +53,9 @@ port_map: identifier
     | procedural_continuous_assignments ";"
     | seq_block
     | par_block
-    | task_enable
+    | task_enable ";"
+    | wait_statement
+    | ";" -> null_statement
 
 blocking_assignment: variable_lvalue "=" [delay_or_event_control] expression
 nonblocking_assignment: variable_lvalue "<=" [delay_or_event_control] expression
@@ -61,7 +63,7 @@ variable_lvalue: lvalue
 ?lvalue: identifier (range)*
     | concatenation
     | multiple_concatenation
-task_enable: variable_lvalue ["(" [expression ("," expression)*] ")"] ";"
+task_enable: variable_lvalue ["(" [expression ("," expression)*] ")"]
 event_trigger: "->" identifier
 disable_statement: "disable" identifier
 procedural_continuous_assignments: ("assign"|"force") blocking_assignment
@@ -76,6 +78,8 @@ loop_statement: "forever" statement -> forever_loop
     | "repeat" "(" expression ")" statement -> repeat_loop
     | "while" "(" expression ")" statement -> while_loop
     | "for" "(" blocking_assignment ";" expression ";" blocking_assignment ")" statement -> for_loop
+
+wait_statement: "wait" "(" expression ")" statement
 
 //delay or event control
 ?delay_or_event_control: delay_control

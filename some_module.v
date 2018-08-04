@@ -66,6 +66,8 @@ module pipe_pal
         disable name;
         assign q = 1;
         #4 deassign q;
+        wait(a)
+        empty_task;;
     end
 
     initial
