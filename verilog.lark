@@ -79,9 +79,12 @@ seq_block: "begin" [":" identifier] statement* "end"
 !_power_op: "**"
 !_factor_op: "+"|"-"|"~"|"!"
 
+concatenation: "{" expression ("," expression)* "}"
+
 ?atom_expr: atom
 ?atom: number
     | identifier (range)*
+    | concatenation
     | ESCAPED_STRING
     | "(" expression ")"
 number: DEC_NUMBER | HEX_NUMBER | OCT_NUMBER | BIN_NUMBER | REAL_NUMBER
