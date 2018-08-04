@@ -14,6 +14,7 @@ assign i_wire = 3.14 + .5;
 assign j_wire = 3.14e10;
 assign k_wire = "hello, world!" + "" + "\"";
 assign l_wire = {a_wire[2], d_wire[1:0]};
+assign m_wire = {3{a_wire[1:0]}};
 
 always @*
 begin

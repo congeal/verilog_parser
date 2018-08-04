@@ -80,11 +80,13 @@ seq_block: "begin" [":" identifier] statement* "end"
 !_factor_op: "+"|"-"|"~"|"!"
 
 concatenation: "{" expression ("," expression)* "}"
+multiple_concatenation: "{" expression concatenation "}"
 
 ?atom_expr: atom
 ?atom: number
     | identifier (range)*
     | concatenation
+    | multiple_concatenation
     | ESCAPED_STRING
     | "(" expression ")"
 number: DEC_NUMBER | HEX_NUMBER | OCT_NUMBER | BIN_NUMBER | REAL_NUMBER
