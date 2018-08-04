@@ -1,30 +1,34 @@
 start: description*
 
 description: module_declaration
-module_declaration: ("module"|"macromodule") identifier [param_list] [port_list] ";" module_item* "endmodule"
+module_declaration: [attribute_instance] ("module"|"macromodule") identifier [param_list] [port_list] ";" module_item* "endmodule"
 
 param_list: "#" "(" [params] ")"
-?params: param_declaration ("," param_declaration)*
+?params: [attribute_instance] param_declaration ("," param_declaration)*
 ?param_declaration: ("parameter"|"localparam") param_assignment
 param_assignment: ["signed"] [range] lvalue "=" expression
 
 port_list: "(" [ports] ")"
-?ports: port_declaration ("," port_declaration)*
+?ports: [attribute_instance] port_declaration ("," port_declaration)*
 ?port_declaration: ["input"|"output"|"inout"] ["signed"] [range] identifier
 range: "[" expression [":" expression] "]"
 
+?attribute_instance: "(" "*" attr_spec "*" ")"
+attr_spec: variable_lvalue ["=" expression]
+
 //module item
 ?module_item: module_or_generate_item
-    | params ";"
     | ports ";"
-    | generated_instantiation
+    | [attribute_instance] generated_instantiation
+    | params ";"
 
-?module_or_generate_item: module_or_generate_item_declaration
-    | continuous_assign
-    | module_instantiation
-    | always_construct
-    | initial_construct
-    | parameter_override ";"
+
+?module_or_generate_item: [attribute_instance] module_or_generate_item_declaration
+    | [attribute_instance] continuous_assign
+    | [attribute_instance] module_instantiation
+    | [attribute_instance] always_construct
+    | [attribute_instance] initial_construct
+    | [attribute_instance] parameter_override ";"
 
 ?module_or_generate_item_declaration: var_declaration
     | function_declaration
@@ -47,7 +51,7 @@ port_map: identifier
     | "." identifier "(" expression ")"
 
 //statement
-?statement: [delay_or_event_control] statement_item
+?statement: [attribute_instance] [delay_or_event_control] statement_item
 ?statement_item: blocking_assignment ";"
     | nonblocking_assignment ";"
     | case_statement

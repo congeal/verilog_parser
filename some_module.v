@@ -1,9 +1,10 @@
+(* first_mod *)
 module pipe_pal
 #(parameter W_DATA=32, localparam W_ADDR = 16)
 (input a, b,
  input [W_DATA-1:0] c, d); /* multi-line
-    comment */ parameter XX = 3;
-    localparam [W_DATA-1:0] XY = 4;
+    comment */ (* param *) parameter XX = 3;
+    (* local_param *) localparam [W_DATA-1:0] XY = 4;
     input a, b;
     input [W_DATA-1:0] c, d;
     assign a_wire = (3+4)*2 + 4 - 1;
@@ -45,6 +46,7 @@ module pipe_pal
     bff = a * 3;
     endfunction
 
+    (* func_decl *)
     function bfunc(input [W_DATA-1:0] a, b);
     begin
         bff = a * 3;
@@ -127,6 +129,7 @@ module pipe_pal
     end
     endgenerate
 
+    (* generate_loop *)
     generate for(i=0;i<4;i=i+1)
     begin: gen_loop
         assign a[i] = b;
@@ -134,5 +137,10 @@ module pipe_pal
     end
     endgenerate
 
+    (* attr *)
     defparam W_DATA = 16;
+
+    task gen_task(input a, output [W_DATA-1:0] b);
+        (* assign_in_task *) b = a;
+    endtask
 endmodule
