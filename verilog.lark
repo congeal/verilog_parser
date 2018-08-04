@@ -18,6 +18,7 @@ module_item: module_or_generate_item
 
 ?module_or_generate_item: continuous_assign
     | always_construct
+    | initial_construct
     | function_declaration
     | task_declaration
     | var_declaration
@@ -29,6 +30,7 @@ net_lvalue: lvalue
 
 //always construct
 always_construct: "always" statement
+initial_construct: "initial" statement
 
 //statement
 ?statement: [delay_or_event_control] statement_item

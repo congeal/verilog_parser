@@ -50,4 +50,12 @@ module pipe_pal
 
     task empty_task;
     endtask
+
+    initial
+    begin: init
+        s = 3 + 4;
+    end
+
+    initial
+        empty_task;
 endmodule
