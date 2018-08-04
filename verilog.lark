@@ -79,16 +79,18 @@ seq_block: "begin" [":" identifier] statement* "end"
 !_power_op: "**"
 !_factor_op: "+"|"-"|"~"|"!"
 
-concatenation: "{" expression ("," expression)* "}"
-multiple_concatenation: "{" expression concatenation "}"
-
 ?primary: number
     | identifier (range)*
     | concatenation
     | multiple_concatenation
+    | function_call
     | ESCAPED_STRING
     | "(" expression ")"
 number: DEC_NUMBER | HEX_NUMBER | OCT_NUMBER | BIN_NUMBER | REAL_NUMBER
+
+concatenation: "{" expression ("," expression)* "}"
+multiple_concatenation: "{" expression concatenation "}"
+function_call: identifier "(" expression ("," expression)* ")"
 
 // Terminals
 ?identifier: CNAME

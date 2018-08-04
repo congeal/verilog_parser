@@ -16,6 +16,7 @@ assign k_wire = "hello, world!" + "" + "\"";
 assign l_wire = {a_wire[2], d_wire[1:0]};
 assign m_wire = {3{a_wire[1:0]}};
 assign {a, b} = 3;
+assign n_wire = afunc(3 +4, a);
 
 always @*
 begin
