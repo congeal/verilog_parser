@@ -2,7 +2,9 @@ module pipe_pal
 #(parameter W_DATA=32, localparam W_ADDR = 16)
 (input a, b,
  input [W_DATA-1:0] c, d); /* multi-line
-    comment */ assign a_wire = (3+4)*2 + 4 - 1;
+    comment */ parameter XX = 3;
+    localparam [W_DATA-1:0] XY = 4;
+    assign a_wire = (3+4)*2 + 4 - 1;
     assign b_wire = a_wire[3] << 2; //expression
     assign c_wire = -a[3:0]**2;
     assign d_wire = a_wire < b_wire[1][3:0];

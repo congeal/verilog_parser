@@ -6,7 +6,7 @@ module_declaration: ("module"|"macromodule") identifier [param_list] [port_list]
 param_list: "#" "(" [params] ")"
 ?params: param_declaration ("," param_declaration)*
 ?param_declaration: ("parameter"|"localparam") param_assignment
-param_assignment: identifier "=" expression
+param_assignment: ["signed"] [range] lvalue "=" expression
 
 port_list: "(" [ports] ")"
 ?ports: port_declaration ("," port_declaration)*
@@ -15,6 +15,7 @@ range: "[" expression [":" expression] "]"
 
 //module item
 module_item: module_or_generate_item
+    | params ";"
 
 ?module_or_generate_item: continuous_assign
     | always_construct
