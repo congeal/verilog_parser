@@ -1,7 +1,7 @@
 module pipe_pal
 #(parameter W_DATA=32, localparam W_ADDR = 16)
 (input a, b,
- input [W_DATA-1:0] c); /* multi-line
+ input [W_DATA-1:0] c, d); /* multi-line
     comment */ assign a_wire = (3+4)*2 + 4 - 1;
     assign b_wire = a_wire[3] << 2; //expression
     assign c_wire = -a[3:0]**2;
@@ -28,6 +28,7 @@ module pipe_pal
     always @*
     begin
         c = a + b;
+        empty_task;
     end
     
     always @(posedge i_clk, negedge resetn)
@@ -37,7 +38,7 @@ module pipe_pal
     reg bff[1:0];
     reg arf, dd;
     integer k;
-        bff = a * 3;
+    bff = a * 3;
     endfunction
 
     function bfunc(input [W_DATA-1:0] a, b);
@@ -46,4 +47,7 @@ module pipe_pal
         afunc = a+b;
     end
     endfunction
+
+    task empty_task;
+    endtask
 endmodule
