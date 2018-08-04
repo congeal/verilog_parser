@@ -3,8 +3,8 @@ module pipe_pal
 (input a, b,
  input [W_DATA-1:0] c); /* multi-line
 comment */ assign a_wire = (3+4)*2 + 4 - 1;
-assign b_wire = a_wire << 2; //expression
-assign c_wire = -a**2;
+assign b_wire = a_wire[3] << 2; //expression
+assign c_wire = -a[3:0]**2;
 assign d_wire = a_wire < b_wire;
 assign e_wire = a_wire !== b_wire;
 assign f_wire = a || b ? (b ? 1 : 0) : (c ? 0 : 1);

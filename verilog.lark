@@ -11,9 +11,7 @@ param_assignment: identifier "=" expression
 port_list: "(" [ports] ")"
 ?ports: port_declaration ("," port_declaration)*
 ?port_declaration: ["input"|"output"|"inout"] ["signed"] [range] identifier
-?range: "[" left_range ":" right_range "]"
-left_range: expression
-right_range: expression
+range: "[" expression [":" expression] "]"
 
 //module item
 module_item: module_or_generate_item
@@ -82,8 +80,8 @@ seq_block: "begin" [":" identifier] statement* "end"
 !_factor_op: "+"|"-"|"~"|"!"
 
 ?atom_expr: atom
-?atom: identifier
-    | number
+?atom: number
+    | identifier [range]
     | ESCAPED_STRING
     | "(" expression ")"
 number: DEC_NUMBER | HEX_NUMBER | OCT_NUMBER | BIN_NUMBER | REAL_NUMBER
