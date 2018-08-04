@@ -82,8 +82,9 @@ loop_statement: "forever" statement -> forever_loop
     | "posedge" expression -> posedge_event
     | "negedge" expression -> negedge_event
     
-seq_block: "begin" [":" identifier] statement* "end"
-par_block: "fork" [":" identifier] statement* "join"
+seq_block: "begin" [":" block_name] var_declaration* statement* "end"
+par_block: "fork" [":" block_name] var_declaration* statement* "join"
+block_name: identifier
 
 //expression
 ?expression: or_expr ["?" or_expr ":" or_expr]

@@ -73,7 +73,8 @@ module pipe_pal
             clk = ~clk;
 
     initial
-    begin
+    begin: loop_blocks
+    integer i;
         repeat (a+1)
             empty_task();
         while(i<3)
