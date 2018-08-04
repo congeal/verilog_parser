@@ -46,6 +46,7 @@ port_map: identifier
 ?statement_item: blocking_assignment ";"
     | nonblocking_assignment ";"
     | case_statement
+    | conditional_statement
     | seq_block
     | par_block
     | variable_lvalue ";" -> task_enable
@@ -60,6 +61,8 @@ variable_lvalue: lvalue
 case_statement: ("case"|"casex"|"casex") "(" expression ")" case_item* "endcase"
 case_item: expression ("," expression)* ":" statement
     | "default" ":" statement -> default_case_item
+
+conditional_statement: "if" "(" expression ")" statement ["else" statement]
 
 //delay or event control
 ?delay_or_event_control: delay_control

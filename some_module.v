@@ -71,9 +71,18 @@ module pipe_pal
         1:
             a = 1;
         3:
+        begin
+            if(k)
+                c = 3;
+            else if(sa)
+                c = 1;
+            else begin
+                c = 2;
+            end
             a = 2;
+        end
         default:
-            b = 0;
+            a = 0;
         endcase
     end
 
