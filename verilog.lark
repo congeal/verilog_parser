@@ -16,6 +16,7 @@ range: "[" expression [":" expression] "]"
 //module item
 module_item: module_or_generate_item
     | params ";"
+    | ports ";"
 
 ?module_or_generate_item: continuous_assign
     | always_construct

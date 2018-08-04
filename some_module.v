@@ -4,6 +4,8 @@ module pipe_pal
  input [W_DATA-1:0] c, d); /* multi-line
     comment */ parameter XX = 3;
     localparam [W_DATA-1:0] XY = 4;
+    input a, b;
+    input [W_DATA-1:0] c, d;
     assign a_wire = (3+4)*2 + 4 - 1;
     assign b_wire = a_wire[3] << 2; //expression
     assign c_wire = -a[3:0]**2;
