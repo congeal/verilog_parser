@@ -81,7 +81,7 @@ seq_block: "begin" [":" identifier] statement* "end"
 
 ?atom_expr: atom
 ?atom: number
-    | identifier [range]
+    | identifier (range)*
     | ESCAPED_STRING
     | "(" expression ")"
 number: DEC_NUMBER | HEX_NUMBER | OCT_NUMBER | BIN_NUMBER | REAL_NUMBER

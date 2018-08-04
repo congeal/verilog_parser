@@ -5,7 +5,7 @@ module pipe_pal
 comment */ assign a_wire = (3+4)*2 + 4 - 1;
 assign b_wire = a_wire[3] << 2; //expression
 assign c_wire = -a[3:0]**2;
-assign d_wire = a_wire < b_wire;
+assign d_wire = a_wire < b_wire[1][3:0];
 assign e_wire = a_wire !== b_wire;
 assign f_wire = a || b ? (b ? 1 : 0) : (c ? 0 : 1);
 assign g_wire = 8'sb110Z_011x;
