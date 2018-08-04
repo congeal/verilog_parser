@@ -65,5 +65,17 @@ module pipe_pal
     initial
         empty_task;
 
+    always @(*)
+    begin
+        case(a)
+        1:
+            a = 1;
+        3:
+            a = 2;
+        default:
+            b = 0;
+        endcase
+    end
+
     some_submodule u_instance(a, .b(b), .c(c[3:0]));
 endmodule
