@@ -19,11 +19,12 @@ module_item: module_or_generate_item
 ?module_or_generate_item: continuous_assign
     | always_construct
     | function_declaration
+    | reg_declaration
 
 //continuous assignment
 continuous_assign: "assign" net_assignment ("," net_assignment)* ";"
 net_assignment: net_lvalue "=" expression
-net_lvalue: expression
+net_lvalue: lvalue
 
 //always construct
 always_construct: "always" statement
@@ -36,7 +37,10 @@ always_construct: "always" statement
 
 blocking_assignment: variable_lvalue "=" [delay_or_event_control] expression
 nonblocking_assignment: variable_lvalue "<=" [delay_or_event_control] expression
-variable_lvalue: identifier
+variable_lvalue: lvalue
+?lvalue: identifier (range)*
+    | concatenation
+    | multiple_concatenation 
 
 //delay or event control
 ?delay_or_event_control: delay_control
@@ -95,6 +99,7 @@ function_call: identifier "(" expression ("," expression)* ")"
 
 // declaration
 function_declaration: "function" ["automatic"] ["signed"] [range] identifier [port_list] ";" statement* "endfunction"
+reg_declaration: "reg" ["signed"] [range] variable_lvalue ("," variable_lvalue)* ";"
 
 // Terminals
 ?identifier: CNAME

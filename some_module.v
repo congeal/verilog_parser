@@ -18,6 +18,9 @@ module pipe_pal
     assign {a, b} = 3;
     assign n_wire = afunc(3 +4, a);
 
+    reg avar;
+    reg bvar, cvar[2:0];
+
     always @*
     begin
         c = a + b;
