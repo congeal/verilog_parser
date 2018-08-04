@@ -22,7 +22,7 @@ module_item: module_or_generate_item
 //continuous assignment
 continuous_assign: "assign" net_assignment ("," net_assignment)* ";"
 net_assignment: net_lvalue "=" expression
-net_lvalue: identifier
+net_lvalue: expression
 
 //always construct
 always_construct: "always" statement
@@ -64,7 +64,7 @@ seq_block: "begin" [":" identifier] statement* "end"
 ?arith_expr: term (_add_op term)*
 ?term: power (_mul_op power)*
 ?power: factor [_power_op factor]
-?factor: [_factor_op] atom_expr
+?factor: [_factor_op] primary
 
 !_or_op: "||"
 !_and_op: "&&"
@@ -82,8 +82,7 @@ seq_block: "begin" [":" identifier] statement* "end"
 concatenation: "{" expression ("," expression)* "}"
 multiple_concatenation: "{" expression concatenation "}"
 
-?atom_expr: atom
-?atom: number
+?primary: number
     | identifier (range)*
     | concatenation
     | multiple_concatenation
