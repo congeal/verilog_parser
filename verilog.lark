@@ -49,6 +49,7 @@ port_map: identifier
     | conditional_statement
     | loop_statement
     | event_trigger ";"
+    | disable_statement ";"
     | seq_block
     | par_block
     | task_enable
@@ -61,6 +62,7 @@ variable_lvalue: lvalue
     | multiple_concatenation
 task_enable: variable_lvalue ["(" [expression ("," expression)*] ")"] ";"
 event_trigger: "->" identifier
+disable_statement: "disable" identifier
 
 case_statement: ("case"|"casex"|"casex") "(" expression ")" case_item* "endcase"
 case_item: expression ("," expression)* ":" statement

@@ -63,6 +63,7 @@ module pipe_pal
             a = 1;
             empty_task;
         join
+        disable name;
     end
 
     initial
