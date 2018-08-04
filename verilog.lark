@@ -17,14 +17,17 @@ range: "[" expression [":" expression] "]"
 module_item: module_or_generate_item
     | params ";"
     | ports ";"
+    | generated_instantiation
 
-?module_or_generate_item: continuous_assign
+?module_or_generate_item: module_or_generate_item_declaration
+    | continuous_assign
+    | module_instantiation
     | always_construct
     | initial_construct
-    | module_instantiation
+
+?module_or_generate_item_declaration: var_declaration
     | function_declaration
     | task_declaration
-    | var_declaration
 
 //continuous assignment
 continuous_assign: "assign" net_assignment ("," net_assignment)* ";"
@@ -97,6 +100,18 @@ wait_statement: "wait" "(" expression ")" statement
 seq_block: "begin" [":" block_name] var_declaration* statement* "end"
 par_block: "fork" [":" block_name] var_declaration* statement* "join"
 block_name: identifier
+
+generated_instantiation: "generate" generate_item* "endgenerate"
+?generate_item: module_or_generate_item
+    | generate_block
+    | generate_loop_statement
+    | generate_conditional_statement
+generate_block: "begin" [":" block_name] generate_item* "end"
+generate_conditional_statement: "if" "(" expression ")" generate_item ["else" generate_item]
+generate_case_statement: "case" "(" expression ")" genvar_case_item* "endcase"
+genvar_case_item: expression ("," expression)* ":" generate_item
+    | "default" ":" generate_item -> default_genvar_case_item
+generate_loop_statement: "for" "(" blocking_assignment ";" expression ";" blocking_assignment ")" generate_item
 
 //expression
 ?expression: or_expr ["?" or_expr ":" or_expr]

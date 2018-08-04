@@ -115,4 +115,22 @@ module pipe_pal
 
     initial
         -> ev;
+    
+    genvar i;
+    generate
+    begin: gen_blk
+        some_submodule u_inst(a, .b(b));
+        if(i)
+            assign a = b;
+        else
+            some_submodule u_inst2(a, .b(b));
+    end
+    endgenerate
+
+    generate for(i=0;i<4;i=i+1)
+    begin: gen_loop
+        assign a[i] = b;
+        some_submodule u_inst_gen(a, .b(b));
+    end
+    endgenerate
 endmodule
