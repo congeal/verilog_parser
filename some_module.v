@@ -20,6 +20,10 @@ module pipe_pal
 
     reg avar;
     reg bvar, cvar[2:0];
+    integer k;
+    wire aa;
+    wire [4:0] awire;
+    reg [3:0] areg;
 
     always @*
     begin
@@ -30,6 +34,9 @@ module pipe_pal
         q_c <= q_c + 1;
 
     function [W_DATA-1:0] afunc(input [W_DATA-1:0] a, b);
+    reg bff[1:0];
+    reg arf, dd;
+    integer k;
         bff = a * 3;
     endfunction
 

@@ -19,7 +19,7 @@ module_item: module_or_generate_item
 ?module_or_generate_item: continuous_assign
     | always_construct
     | function_declaration
-    | reg_declaration
+    | var_declaration
 
 //continuous assignment
 continuous_assign: "assign" net_assignment ("," net_assignment)* ";"
@@ -98,8 +98,8 @@ multiple_concatenation: "{" expression concatenation "}"
 function_call: identifier "(" expression ("," expression)* ")"
 
 // declaration
-function_declaration: "function" ["automatic"] ["signed"] [range] identifier [port_list] ";" statement* "endfunction"
-reg_declaration: "reg" ["signed"] [range] variable_lvalue ("," variable_lvalue)* ";"
+function_declaration: "function" ["automatic"] ["signed"] [range] identifier [port_list] ";" var_declaration* statement* "endfunction"
+var_declaration: ("reg"|"integer"|"real"|"real"|"realtime"|"event"|"genvar"|"wire") ["signed"] [range] variable_lvalue ("," variable_lvalue)* ";"
 
 // Terminals
 ?identifier: CNAME
