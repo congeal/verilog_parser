@@ -56,6 +56,10 @@ module pipe_pal
     initial
     begin: init
         s = 3 + 4;
+        fork: name
+            a = 1;
+            empty_task;
+        join
     end
 
     initial

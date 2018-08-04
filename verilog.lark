@@ -46,6 +46,7 @@ port_map: identifier
 ?statement_item: blocking_assignment ";"
     | nonblocking_assignment ";"
     | seq_block
+    | par_block
     | variable_lvalue ";" -> task_enable
 
 blocking_assignment: variable_lvalue "=" [delay_or_event_control] expression
@@ -68,6 +69,7 @@ variable_lvalue: lvalue
     | "negedge" expression -> negedge_event
     
 seq_block: "begin" [":" identifier] statement* "end"
+par_block: "fork" [":" identifier] statement* "join"
 
 //expression
 ?expression: or_expr ["?" or_expr ":" or_expr]
