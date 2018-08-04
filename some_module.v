@@ -105,4 +105,7 @@ module pipe_pal
     end
 
     some_submodule u_instance(a, .b(b), .c(c[3:0]));
+
+    initial
+        -> ev;
 endmodule
