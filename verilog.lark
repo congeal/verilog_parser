@@ -18,6 +18,7 @@ module_item: module_or_generate_item
 
 ?module_or_generate_item: continuous_assign
     | always_construct
+    | function_declaration
 
 //continuous assignment
 continuous_assign: "assign" net_assignment ("," net_assignment)* ";"
@@ -91,6 +92,9 @@ number: DEC_NUMBER | HEX_NUMBER | OCT_NUMBER | BIN_NUMBER | REAL_NUMBER
 concatenation: "{" expression ("," expression)* "}"
 multiple_concatenation: "{" expression concatenation "}"
 function_call: identifier "(" expression ("," expression)* ")"
+
+// declaration
+function_declaration: "function" ["automatic"] ["signed"] [range] identifier [port_list] ";" statement* "endfunction"
 
 // Terminals
 ?identifier: CNAME
