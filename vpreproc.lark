@@ -1,0 +1,65 @@
+?start: (line _NEWLINE)* [line]
+
+?line: directive
+    | normal_line
+?directive: macro_decl
+    | include
+    | time_scale
+    | conditional_macro_block
+    | other_directive
+
+macro_decl: "`define" macro_name macro_text -> macro_decl
+macro_name: identifier
+macro_text: identifier
+    | number
+    | string
+
+include: "`include" string
+
+time_scale: "`timescale" INT time_unit "/" INT time_unit
+time_unit: "s" -> s
+    |"ms" -> ms
+    |"us" -> us
+    |"ns" -> ns
+    |"ps" -> ps
+
+conditional_macro_block: ("`ifdef"|"`ifndef") macro_name _NEWLINE block ("`elsif" macro_name _NEWLINE block)* ["`else" _NEWLINE block] "`endif"
+block: (line _NEWLINE)*
+
+other_directive: "`" identifier [identifier]
+
+number: DEC_NUMBER | HEX_NUMBER | OCT_NUMBER | BIN_NUMBER | REAL_NUMBER
+string: ESCAPED_STRING
+
+normal_line: /[^`].+/
+new_line: _NEWLINE
+
+
+// Terminals
+?identifier: CNAME
+    | ESC_NAME
+ESC_NAME: "\\"(ANY_CHAR+)
+ANY_CHAR: /[^ \t\r\n\f]/
+%import common.CNAME
+%import common.ESCAPED_STRING
+
+%import common.DIGIT
+INT: DIGIT+
+DEC_NUMBER: [INT] ["'" /[sS]?[dD]/] /[0-9_xXzZ]+/
+HEX_NUMBER.2: [INT] "'" /[sS]?[hH][0-9a-fA-F_xXzZ]+/
+OCT_NUMBER.2: [INT] "'" /[sS]?[oO][0-7_xXzZ]+/
+BIN_NUMBER.2 : [INT] "'" /[sS]?[bB][0-1_xXzZ]+/
+REAL_NUMBER.2: /((\d+\.\d*|\.\d+)(e[-+]?\d+)?|\d+(e[-+]?\d+))/i
+
+// Ignorable
+COMMENT: "//" /[^\n]*/
+%ignore COMMENT
+
+BLOCK_COMMENT: "/*" /(.|\n)*?/ "*/"
+%ignore BLOCK_COMMENT
+
+%import common.WS_INLINE
+%ignore WS_INLINE
+%import common.NEWLINE
+// %ignore NEWLINE
+_NEWLINE: ( /\r?\n[\t ]*/ | COMMENT )+
